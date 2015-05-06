@@ -2,7 +2,11 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="description" content="Leaving Cert Points Calculator">
+<meta name="keywords" content="leaving cert points calculator, lc points calculator, lc points calc">
+<meta name="author" content="Tiarnan McGrath">
+
 
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -10,21 +14,21 @@
 <script src="js/ui-bootstrap-tpls-0.12.1.min.js"></script>
 
 
-<!--Anglular-->
+<!--Angular-->
 <script>
 	var mod=angular.module('myModule', ['ui.bootstrap']);
 	mod.controller('controller', function($scope){
+ 		$scope.mathsTooltip="+25 points";
 
 		//Initialising variables
 		$scope.totalPoints=0;
 		$scope.disableHLMaths=false;
-		$scope.subjectLevel=0;
-		$scope.totalPoints=0;
+		$scope.subjectLevel=null;
 		$scope.userResults=[];
 
 		//Adds clickec result to result array
 		$scope.addResult=function(resultGrade,points){
-			if($scope.userResults.length<10){
+			if($scope.userResults.length<10 && $scope.subjectLevel!=null){
 				var resultLevel,resultPoints,result;
 				resultPoints=points;
 				//Determining points from of result depending on the level set
@@ -41,8 +45,9 @@
 					resultPoints+=	65;
 					resultLevel="HL Maths";
 					resultId=2;
-					$scope.subjectLevel=0;
+					$scope.subjectLevel=null;
 					$scope.disableHLMaths=true;
+
 				}
 				result={
 					grade:resultGrade,
@@ -94,66 +99,78 @@
 </script>
 </head>
 <body>
-	<div ng-app="myModule" ng-controller="controller"  class="container">
-		<div class="page-header text-center">
-			<h2>LC Points Calculator.</h2>
-			<p class="lead">Simple, easy-to-use points calculator</p>
+	<div ng-app="myModule" ng-controller="controller">
+		<div class="container"style="background-color:#00BBB1; color:white;padding-bottom:0px;margin:0;width:100%;">
+			<div class="container" style="padding-bottom:0px;">
+				<div class="col-md-3">
+				</div>
+				<div class="col-xs-5 col-sm-5 col-md-3">
+				</div>
+				<div  class="col-xs-7 col-sm-7 col-md-3">
+					<div class="text-right">
+						<h2 >{{totalPoints+" points"}}</h2>
+						<h5 >{{userResults.length}} subjects</h5>
+					</div>
+				</div>
+				<div class="col-md-3">
+				</div>
+			</div>
 		</div>
+		<div class="container">
+		<br>
+		<br>
 		<br>
 		<div class="row">
 			<div class="col-md-3">
 			</div>
-			<div class="col-xs-7 col-md-4">
+			<div class="col-xs-8 col-md-4">
+				<h5 ng-show="subjectLevel==null">Choose subject level:</h5>
 				<div class="btn-group" >
-				        <label class="btn btn-default btn-md" ng-model="subjectLevel" btn-radio="'0'">HL</label>
-				        <label class="btn btn-default btn-md" ng-model="subjectLevel" btn-radio="'1'">OL</label>
-				        <label class="btn btn-default btn-md" ng-model="subjectLevel" ng-disabled="disableHLMaths" btn-radio="'2'">HL Maths</label>
+				        <label class="btn btn-default btnstyle"  ng-model="subjectLevel" btn-radio="'0'">HL</label>
+				        <label class="btn btn-default btnstyle"  ng-model="subjectLevel" btn-radio="'1'">OL</label>
+				        <label class="btn btn-default btnstyle"  ng-model="subjectLevel" tooltip="{{mathsTooltip}}" tooltip-placement="right" ng-disabled="disableHLMaths" btn-radio="'2'" >HL Maths</label>
 				</div>
 				<br>
 				<br>
 				<div class="btn-group" >
-					<button type="button" class="btn btn-default btn-md" ng-click="addResult('A1',60)  ">A1</button>
-					<button type="button" class="btn btn-default btn-md" ng-click="addResult('A2',50) ">A2</button>
+					<button type="button" class="btn btn-default btnstyle" ng-disabled="subjectLevel==null" ng-click="addResult('A1',60) ">A1    </button>
+					<button type="button" class="btn btn-default btnstyle" ng-disabled="subjectLevel==null" ng-click="addResult('A2',50) ">A2    </button>
 				</div>
 				<br>
 				<br>
 				<div class="btn-group">
-					  <button type="button" class="btn btn-default btn-md" ng-click="addResult('B1',45)  ">B1</button>
-					  <button type="button" class="btn btn-default btn-md" ng-click="addResult('B2',40)  ">B2</button>
-					  <button type="button" class="btn btn-default btn-md" ng-click="addResult('B3',40)  ">B3</button>
+					  <button type="button" class="btn btn-default btnstyle" ng-disabled="subjectLevel==null" ng-click="addResult('B1',45)  "> B1    </button>
+					  <button type="button" class="btn btn-default btnstyle" ng-disabled="subjectLevel==null" ng-click="addResult('B2',40)  "> B2    </button>
+					  <button type="button" class="btn btn-default btnstyle" ng-disabled="subjectLevel==null" ng-click="addResult('B3',40)  "> B3    </button>
 				</div>
 				<br>
 				<br>
 				<div class="btn-group">
-					  <button type="button" class="btn btn-default btn-md" ng-click="addResult('C1',30)  ">C1</button>
-					  <button type="button" class="btn btn-default btn-md" ng-click="addResult('C2',25) ">C2</button>
-					  <button type="button" class="btn btn-default btn-md" ng-click="addResult('C3',20)  ">C3</button>
+					  <button type="button" class="btn btn-default btnstyle" ng-disabled="subjectLevel==null" ng-click="addResult('C1',30)  "> C1    </button>
+					  <button type="button" class="btn btn-default btnstyle" ng-disabled="subjectLevel==null" ng-click="addResult('C2',25) "> C2    </button>
+					  <button type="button" class="btn btn-default btnstyle" ng-disabled="subjectLevel==null" ng-click="addResult('C3',20)  "> C3    </button>
 				</div>
 				<br>
 				<br>
 				<div class="btn-group">
-					  <button type="button" class="btn btn-default btn-md" ng-click="addResult('D1',15) ">D1</button>
-					  <button type="button" class="btn btn-default btn-md" ng-click="addResult('D2',10) ">D2</button>
-					  <button type="button" class="btn btn-default btn-md" ng-click="addResult('D3',5) ">D3</button>
+					  <button type="button" class="btn btn-default btnstyle" ng-disabled="subjectLevel==null" ng-click="addResult('D1',15) "> D1    </button>
+					  <button type="button" class="btn btn-default btnstyle" ng-disabled="subjectLevel==null" ng-click="addResult('D2',10) "> D2    </button>
+					  <button type="button" class="btn btn-default btnstyle" ng-disabled="subjectLevel==null" ng-click="addResult('D3',5) "> D3    </button>
 				</div>
 				<br>
 				<br>
-				<div class="btn-group-inline">
-				<button type="button" class="btn btn-default btn-md" ng-click="clearLastResult()">Clear Last</button>
-				<button type="button" class="btn btn-default btn-md" ng-click="clearAllResult()">Clear All</button>
+				<div class="btn-group">
+				<button type="button" class="btn btn-default btnstyle" ng-disabled="userResults.length<1" ng-click="clearLastResult()">Clear Last</button>
+				<button type="button" class="btn btn-default btnstyle" ng-disabled="userResults.length<1" ng-click="clearAllResult()">Clear All</button>
 				</div>
 			</div>
-			<div  class="col-xs-5 col-md-4">
+			<div  class="col-xs-4 col-md-4" style="border-left:1px solid #ccc">
 				<h4 ng-class="{strike: $index > 5}"ng-repeat="result in userResults track by $index">{{result.grade+" ("+ result.subjectLevel+")"+"       "+result.points}}</h4>
-				<h4>_______</h4>
-				<h4>{{totalPoints+" points"}}</h4>
+			</div>
 			</div>
 		</div>
-		<br>
-		<br>
-		<br>
-		<br>
 		<footer class="footer">
+			<br>
 			<div class="container">
 				<p class="text-muted">Created with the help of <a href="angularjs.org" target="_blank"><i>Anglular.js</i></a> and some <a href="http://getbootstrap.com/"  target="_blank"><i>Bootstrap</i></a> &#169;2015 Tíarnán McGrath</p>
 			</div>
