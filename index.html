@@ -165,7 +165,7 @@
 				</div>
 			</div>
 			<div  class="col-xs-4 col-md-4" style="border-left:1px solid #ccc">
-				<h4 ng-class="{strike: $index > 5}"ng-repeat="result in userResults track by $index">{{result.grade+" ("+ result.subjectLevel+")"+"       "+result.points}}</h4>
+				<h4 ng-class="{'strike text-muted': $index > 5}"ng-repeat="result in userResults track by $index">{{result.grade+" ("+ result.subjectLevel+")"+"       "+result.points}}</h4>
 			</div>
 			</div>
 		</div>
